@@ -1,5 +1,6 @@
 import sys
 
+import numpy as np
 from matplotlib.backends.backend_qtagg import FigureCanvasQTAgg, NavigationToolbar2QT
 from matplotlib.figure import Figure
 from PySide6.QtWidgets import (
@@ -114,6 +115,27 @@ class MainWindow(QMainWindow):
 
         self.axes.spines["top"].set_visible(False)
         self.axes.spines["right"].set_visible(False)
+
+        if len(self.temperatures) > 0:
+            m, b = np.polyfit(self.temperatures, self.profits, 1)
+            trend_temperatures = [
+                min(self.temperatures),
+                max(self.temperatures),
+            ]
+            trend_profits = [
+                m * temperature + b for temperature in trend_temperatures
+            ]
+            if b >= 0:
+                equation = f"y = {m:.2f}x + {b:.2f}"
+            else:
+                equation = f"y = {m:.2f}x - {abs(b):.2f}"
+            self.axes.plot(
+                trend_temperatures,
+                trend_profits,
+                color="red",
+                label=equation,
+            )
+            self.axes.legend()
 
         self.axes.set_xlim(left=0)
         self.axes.set_ylim(bottom=0)

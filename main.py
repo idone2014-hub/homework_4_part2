@@ -25,7 +25,7 @@ class AboutDialog(QDialog):
             "Explore how temperature relates to ice cream sales profits."
         )
         repository_link = QLabel(
-            '<a href="https://github.com/idone2014-hub/homework_4_part2/blob/master/main.py" '
+            '<a href="https://github.com/idone2014-hub/homework_4_part2" '
             'style="color: #0B57D0; font-weight: bold;">'
             "Project repository</a>"
         )
@@ -91,21 +91,39 @@ class MainWindow(QMainWindow):
         dialog.exec()
 
     def load_file(self, file_path):
-        pass
+        self.temperatures = []
+        self.profits = []
+
+        with open(file_path, "r") as f:
+            lines = f.readlines()
+
+        for line in lines[1:]:
+            clean_line = line.strip()
+            if clean_line != "":
+                parts = clean_line.split(",")
+                revenue = float(parts[0])
+                temperature = float(parts[1])
+                self.profits.append(revenue)
+                self.temperatures.append(temperature)
+
+        self.plot_graph()
 
     def plot_graph(self):
         self.axes.clear()
-        self.axes.plot([10, 20, 30, 40], [100, 180, 260, 340], marker="o")
+        self.axes.scatter(self.temperatures, self.profits, s=1)
+
+        self.axes.spines["top"].set_visible(False)
+        self.axes.spines["right"].set_visible(False)
+
         self.axes.set_xlim(left=0)
         self.axes.set_ylim(bottom=0)
-        self.axes.set_title("Ice Cream Profits vs. Temperature")
-        self.axes.set_xlabel("Temperature")
-        self.axes.set_ylabel("Profit")
+        self.axes.set_title("Ice Cream Sales Revenue vs. Temperature")
+        self.axes.set_xlabel("Temperature (°C)")
+        self.axes.set_ylabel("Revenue ($)")
         self.axes.grid(True, alpha=0.3)
         self.figure.tight_layout()
         self.figure.subplots_adjust(bottom=0.20)
         self.canvas.draw()
-
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)

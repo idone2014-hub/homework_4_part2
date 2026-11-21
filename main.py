@@ -25,7 +25,8 @@ class AboutDialog(QDialog):
             "Explore how temperature relates to ice cream sales profits."
         )
         repository_link = QLabel(
-            '<a href="https://github.com/your-username/your-repository">'
+            '<a href="https://github.com/idone2014-hub/homework_4_part2/blob/master/main.py" '
+            'style="color: #0B57D0; font-weight: bold;">'
             "Project repository</a>"
         )
         repository_link.setOpenExternalLinks(True)
@@ -42,6 +43,7 @@ class MainWindow(QMainWindow):
         self.profits = []
 
         self.setWindowTitle("Ice Cream Sales Profits")
+        self.resize(900, 680)
 
         central_widget = QWidget()
         layout = QVBoxLayout(central_widget)
@@ -94,11 +96,14 @@ class MainWindow(QMainWindow):
     def plot_graph(self):
         self.axes.clear()
         self.axes.plot([10, 20, 30, 40], [100, 180, 260, 340], marker="o")
+        self.axes.set_xlim(left=0)
+        self.axes.set_ylim(bottom=0)
         self.axes.set_title("Ice Cream Profits vs. Temperature")
         self.axes.set_xlabel("Temperature")
         self.axes.set_ylabel("Profit")
         self.axes.grid(True, alpha=0.3)
         self.figure.tight_layout()
+        self.figure.subplots_adjust(bottom=0.20)
         self.canvas.draw()
 
 

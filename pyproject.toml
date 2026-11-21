@@ -1,0 +1,20 @@
+[project]
+name = "homework-4-part2"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "Ido Nesher", email = "Ido.Nesher@s.afeka.ac.il" }
+]
+requires-python = ">=3.12"
+dependencies = [
+    "matplotlib>=3.11.2",
+    "numpy>=2.5.5",
+]
+
+[project.scripts]
+homework-4-part2 = "homework_4_part2:main"
+
+[build-system]
+requires = ["uv_build>=0.13.5,<0.14.0"]
+build-backend = "uv_build"

@@ -102,10 +102,10 @@ class MainWindow(QMainWindow):
             clean_line = line.strip()
             if clean_line != "":
                 parts = clean_line.split(",")
-                revenue = float(parts[0])
-                temperature = float(parts[1])
-                self.profits.append(revenue)
+                temperature = float(parts[0])
+                revenue = float(parts[1])
                 self.temperatures.append(temperature)
+                self.profits.append(revenue)
 
         self.plot_graph()
 
